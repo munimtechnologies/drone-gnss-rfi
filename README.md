@@ -18,8 +18,23 @@ By MV2 of Munim, Inc. (mv2@munimtech.com). Made with AI agents working in MV2's 
   position "teleports", receiver-clock jumps, the 1-degree cell of the first good fix); the sample rule; the grading.
 - `run_gnsswatch.py`: the job. It checks that the plan and code here match the copies it runs before reading any log.
 - `test_gnsswatch.py`: unit tests on synthetic logs (`python -m unittest -v test_gnsswatch`).
+- [`NOTE-2026-11-17-dates.md`](NOTE-2026-11-17-dates.md): Flight Review's log date is the upload date, not the flight
+  date (does not affect H1-H5).
 
-Results will be added as `GRADE.md` with the job's outputs. Positions are published only as 1-degree cells and region names.
+Results will be added in `study1/` (`GRADE.md`, `rows.jsonl`, `summary.json`). Positions are published only as 1-degree
+cells and region names.
+
+## Study 2 (pre-registered 2026-11-17, before study 1 had results)
+
+Do drones report interference on the days and places where aircraft see it? Each study-1 log is matched to the share of
+aircraft reporting degraded navigation on the same UTC day (from the drone's own receiver clock) in the 3 x 3 block of
+1-degree cells around it, using [GPSJam](https://gpsjam.org)'s public daily files.
+
+- [`study2/PLAN-matched.md`](study2/PLAN-matched.md): input, exposure measure, four predictions (M1-M4), limits.
+- `study2/gpsjam_match.py`, `study2/run_match.py`, `study2/test_gpsjam_match.py`.
+
+Aircraft interference data: GPSJam (gpsjam.org) by John Wiseman, from airplanes.live and ADS-B Exchange. GPSJam's files
+are not copied here; only per-log sums derived from them.
 
 ## Use the reader on your own log
 
@@ -36,6 +51,6 @@ states 0-3 (unknown, ok, warning, critical).
 ## Limits
 
 Uploaded logs are not a random sample of flights; the receiver's spoofing flag is a heuristic; a spoofed fix can put a
-drone in the wrong place. See `PLAN.md`.
+drone in the wrong place. See `PLAN.md` and `study2/PLAN-matched.md`.
 
 PX4 is BSD-3-Clause; pyulog (used only to cross-check the reader) is BSD-3-Clause. No PX4 code is copied here.

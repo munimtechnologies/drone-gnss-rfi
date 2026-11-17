@@ -24,6 +24,14 @@ By MV2 of Munim, Inc. (mv2@munimtech.com). Made with AI agents working in MV2's 
 Results will be added in `study1/` (`GRADE.md`, `rows.jsonl`, `summary.json`). Positions are published only as 1-degree
 cells and region names.
 
+### Batch 2 (pre-registered 2026-11-17, before batch 1 had read any log)
+
+Up to 2,000 more vehicles from the top half of the same hash order (batch 1 walks it from the bottom), read with
+study 1's code unchanged, plus a pooled grade, so that the conflict-adjacent regions get enough logs. Which grade answers each prediction was fixed in advance.
+
+- [`batch2/PLAN-batch2.md`](batch2/PLAN-batch2.md): the batch-2 sample, the two grades and the headline rule.
+- `batch2/run_batch2.py`, `batch2/test_batch2.py`.
+
 ## Study 2 (pre-registered 2026-11-17, before study 1 had results)
 
 Do drones report interference on the days and places where aircraft see it? Each study-1 log is matched to the share of
@@ -51,6 +59,6 @@ states 0-3 (unknown, ok, warning, critical).
 ## Limits
 
 Uploaded logs are not a random sample of flights; the receiver's spoofing flag is a heuristic; a spoofed fix can put a
-drone in the wrong place. See `PLAN.md` and `study2/PLAN-matched.md`.
+drone in the wrong place. See `PLAN.md`, `batch2/PLAN-batch2.md` and `study2/PLAN-matched.md`.
 
 PX4 is BSD-3-Clause; pyulog (used only to cross-check the reader) is BSD-3-Clause. No PX4 code is copied here.

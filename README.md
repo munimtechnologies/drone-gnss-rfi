@@ -1,11 +1,13 @@
 # drone-gnss-rfi
 
 Do civilian drones near the ground see the GNSS spoofing and jamming that airliners report over the Baltic, the eastern
-Mediterranean, the Black Sea and the Persian Gulf?
+Mediterranean, the Black Sea and the Persian Gulf? And did the great geomagnetic storms of 2023-2026 degrade their
+navigation?
 
-Interference maps today come from airliners at cruise altitude (ADS-B) and from a few fixed ground monitors. This project
-measures it from the drones' own GNSS receivers instead, using the spoofing and jamming states, jamming indicator, positions
-and receiver clock recorded in public PX4 flight logs on [PX4 Flight Review](https://review.px4.io).
+Interference maps today come from airliners at cruise altitude (ADS-B) and from a few fixed ground monitors, and storm
+impacts on GNSS were measured at ground stations. This project measures both from the drones' own GNSS receivers instead,
+using the spoofing and jamming states, jamming indicator, fix type, estimated accuracy, positions and receiver clock
+recorded in public PX4 flight logs on [PX4 Flight Review](https://review.px4.io).
 
 By MV2 of Munim, Inc. (mv2@munimtech.com). Made with AI agents working in MV2's name. Code Apache-2.0; text and data CC BY 4.0.
 
@@ -44,6 +46,21 @@ aircraft reporting degraded navigation on the same UTC day (from the drone's own
 Aircraft interference data: GPSJam (gpsjam.org) by John Wiseman, from airplanes.live and ADS-B Exchange. GPSJam's files
 are not copied here; only per-log sums derived from them.
 
+## Study S1: geomagnetic storms (pre-registered 2026-11-17)
+
+Did the severe geomagnetic storms of 2023-2026 (Kp 8- or more, including the Kp 9 storm of 10-11 May 2024) measurably
+degrade GNSS on real drones? Each storm-time flight is paired with a quiet-time flight of the same vehicle in the two
+weeks before, closest in time of day; a placebo (the same spans moved 28 or 56 quiet days back) checks for calendar
+effects. Measures: the receiver's estimated horizontal and vertical accuracy, satellites used, fix losses and RTK fixed
+share. Logs are read with study 1's reader, unchanged.
+
+- [`storms/PLAN-storms.md`](storms/PLAN-storms.md): events, pairing rules, measures, predictions P0-P4, headline rule,
+  limits.
+- `storms/stormwatch.py`, `storms/run_storms.py`, `storms/test_stormwatch.py`.
+
+Kp data: GFZ Helmholtz Centre for Geosciences, Geomagnetic Observatory Niemegk (CC BY 4.0; Matzka et al. 2021,
+*Space Weather*, doi:10.1029/2020SW002641). Results will be added in `storms/`.
+
 ## Use the reader on your own log
 
 ```python
@@ -59,6 +76,7 @@ states 0-3 (unknown, ok, warning, critical).
 ## Limits
 
 Uploaded logs are not a random sample of flights; the receiver's spoofing flag is a heuristic; a spoofed fix can put a
-drone in the wrong place. See `PLAN.md`, `batch2/PLAN-batch2.md` and `study2/PLAN-matched.md`.
+drone in the wrong place; Kp is a planetary index and the local ionosphere differs. See `PLAN.md`,
+`batch2/PLAN-batch2.md`, `study2/PLAN-matched.md` and `storms/PLAN-storms.md`.
 
 PX4 is BSD-3-Clause; pyulog (used only to cross-check the reader) is BSD-3-Clause. No PX4 code is copied here.

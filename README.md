@@ -1,13 +1,13 @@
 # drone-gnss-rfi
 
 Do civilian drones near the ground see the GNSS spoofing and jamming that airliners report over the Baltic, the eastern
-Mediterranean, the Black Sea and the Persian Gulf? And did the great geomagnetic storms of 2023-2026 degrade their
-navigation?
+Mediterranean, the Black Sea and the Persian Gulf? Did the great geomagnetic storms of 2023-2026 degrade their
+navigation? And do the plasma bubbles that form after sunset near the magnetic equator do the same?
 
 Interference maps today come from airliners at cruise altitude (ADS-B) and from a few fixed ground monitors, and storm
-impacts on GNSS were measured at ground stations. This project measures both from the drones' own GNSS receivers instead,
-using the spoofing and jamming states, jamming indicator, fix type, estimated accuracy, positions and receiver clock
-recorded in public PX4 flight logs on [PX4 Flight Review](https://review.px4.io).
+and scintillation impacts on GNSS were measured at ground stations. This project measures them from the drones' own GNSS
+receivers instead, using the spoofing and jamming states, jamming indicator, fix type, estimated accuracy, positions and
+receiver clock recorded in public PX4 flight logs on [PX4 Flight Review](https://review.px4.io).
 
 By MV2 of Munim, Inc. (mv2@munimtech.com). Made with AI agents working in MV2's name. Code Apache-2.0; text and data CC BY 4.0.
 
@@ -61,6 +61,20 @@ share. Logs are read with study 1's reader, unchanged.
 Kp data: GFZ Helmholtz Centre for Geosciences, Geomagnetic Observatory Niemegk (CC BY 4.0; Matzka et al. 2021,
 *Space Weather*, doi:10.1029/2020SW002641). Results will be added in `storms/`.
 
+## Study S2: plasma bubbles after sunset (pre-registered 2026-11-18)
+
+Near the magnetic equator the ionosphere often breaks into plasma bubbles after sunset, and GNSS signals scintillate;
+ground receivers lose satellites and RTK fixes. Does this show up on real drones? Within 20 degrees of the magnetic
+equator, each vehicle's night flight (19:30-01:00 local solar time) is compared with its own day flight (08:00-17:00),
+in the equinox seasons of 2023-2026 (near solar maximum). Middle latitudes (30-55 degrees) are the negative control, both
+for the pairs and in a difference-in-differences on one survey log per vehicle. Logs are read with study 1's reader and
+measured with study S1's measures, both unchanged.
+
+- [`scint/PLAN-scint.md`](scint/PLAN-scint.md): bands, times, sample rule, predictions N0-N5, headline rule, limits.
+- `scint/scintwatch.py`, `scint/run_scint.py`, `scint/test_scintwatch.py`.
+
+Results will be added in `scint/`.
+
 ## Use the reader on your own log
 
 ```python
@@ -76,7 +90,8 @@ states 0-3 (unknown, ok, warning, critical).
 ## Limits
 
 Uploaded logs are not a random sample of flights; the receiver's spoofing flag is a heuristic; a spoofed fix can put a
-drone in the wrong place; Kp is a planetary index and the local ionosphere differs. See `PLAN.md`,
-`batch2/PLAN-batch2.md`, `study2/PLAN-matched.md` and `storms/PLAN-storms.md`.
+drone in the wrong place; Kp is a planetary index and the local ionosphere differs; a centred dipole only approximates
+the magnetic equator. See `PLAN.md`, `batch2/PLAN-batch2.md`, `study2/PLAN-matched.md`, `storms/PLAN-storms.md` and
+`scint/PLAN-scint.md`.
 
 PX4 is BSD-3-Clause; pyulog (used only to cross-check the reader) is BSD-3-Clause. No PX4 code is copied here.

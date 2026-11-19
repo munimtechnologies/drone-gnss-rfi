@@ -42,6 +42,9 @@ aircraft reporting degraded navigation on the same UTC day (from the drone's own
 
 - [`study2/PLAN-matched.md`](study2/PLAN-matched.md): input, exposure measure, four predictions (M1-M4), limits.
 - `study2/gpsjam_match.py`, `study2/run_match.py`, `study2/test_gpsjam_match.py`.
+- [`study2/PLAN-matched-pooled.md`](study2/PLAN-matched-pooled.md) (2026-11-19, before any input existed): how study 2
+  is run on batch 1 + batch 2, as `batch2/PLAN-batch2.md` fixed; `study2/run_match_pooled.py` runs study 2's code
+  unchanged on the pooled logs and applies the headline rule; `study2/test_match_pooled.py`.
 
 Aircraft interference data: GPSJam (gpsjam.org) by John Wiseman, from airplanes.live and ADS-B Exchange. GPSJam's files
 are not copied here; only per-log sums derived from them.
